@@ -1,0 +1,58 @@
+---
+title: "ESM 244 Lab 1"
+author: "Grace Brofman"
+date: "1/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#installing package (do it in the console)
+#install.packages("packagename") e.g. "sf" and "tmap"
+library(tidyverse)
+library(here)
+library(sf)
+library(tmap)
+
+```
+
+### Read in SF trees data
+
+```{r}
+sf_trees <- read_csv(here("data", "sf_trees", "sf_trees.csv"))
+
+```
+
+### Basic wrangling reminders
+
+Refresh some skills for data wrangling and summary statistics using functions in the `dplyr` package.
+
+Find the top 5 highest observations of trees by legal_status, do some wrangling, make a graph.
+count function
+1. recognizes groups (replaces group_by)
+2. finds counts (replaces n function)
+3. puts in table (replaces summarize)
+
+drop_na removes any row that contains missing or na value for the variable that you specify
+rename renames a column (new_name = old_name)
+relocate: allows you to move things around by class, location, or single column
+lice_max allows you to identify rows with highest values that youve identified and keep those rows
+```{r}
+top_5_status <- sf_trees %>% 
+  count(legal_status) %>% 
+  drop_na(legal_status) %>% 
+  rename(tree_count = n) %>% 
+  relocate(tree_count) %>% 
+  slice_max(tree_count, n = 5)
+  
+
+```
+
+
+
+
+
+
+
+
